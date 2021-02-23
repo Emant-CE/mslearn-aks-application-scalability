@@ -1,57 +1,115 @@
-# Project Name
+---
+page_type: sample
+languages:
+- go
+- javascript
+- html
+- css
+products:
+- aks
+description: "Demo application for the 'Scaling AKS Application with HPA' learn module"
+urlFragment: "aks-application-scaling-hpa-demo"
+---
 
-(short, 1-3 sentenced, description of the project)
+# Official Microsoft Sample
 
-## Features
+<!--
+Guidelines on README format: https://review.docs.microsoft.com/help/onboard/admin/samples/concepts/readme-template?branch=master
 
-This project framework provides the following features:
+Guidance on onboarding samples to docs.microsoft.com/samples: https://review.docs.microsoft.com/help/onboard/admin/samples/process/onboarding?branch=master
 
-* Feature 1
-* Feature 2
-* ...
+Taxonomies for products and languages: https://review.docs.microsoft.com/new-hope/information-architecture/metadata/taxonomies?branch=master
+-->
 
-## Getting Started
+This is the base demonstration for the "Scaling AKS Applications with HPA" learn module.
 
-### Prerequisites
+## Summary
 
-(ideally very short, if any)
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 
-- OS
-- Library version
-- ...
+<!-- code_chunk_output -->
 
-### Installation
+- [Official Microsoft Sample](#official-microsoft-sample)
+  - [Summary](#summary)
+  - [Contents](#contents)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+  - [Running the sample](#running-the-sample)
+  - [Running the image](#running-the-image)
+  - [Deploying to Kubernetes](#deploying-to-kubernetes)
+  - [Key concepts](#key-concepts)
+  - [Contributing](#contributing)
 
-(ideally very short)
+<!-- /code_chunk_output -->
 
-- npm install [package name]
-- mvn install
-- ...
+## Contents
 
-### Quickstart
-(Add steps to get up and running quickly)
+Outline the file contents of the repository. It helps users navigate the codebase, build configuration and any related assets.
 
-1. git clone [repository clone url]
-2. cd [respository name]
-3. ...
+| File/folder       | Description                                |
+|-------------------|--------------------------------------------|
+| `src`             | Sample source code.                        |
+| `.gitignore`      | Define what to ignore at commit time.      |
+| `CHANGELOG.md`    | List of changes to the sample.             |
+| `CONTRIBUTING.md` | Guidelines for contributing to the sample. |
+| `README.md`       | This README file.                          |
+| `LICENSE`         | The license for the sample.                |
+| `Dockerfile`      | Docker image file                          |
 
+## Prerequisites
 
-## Demo
+This sample is built using [Hugo](https://gohugo.io), therefore it is needed as prerequisite to run this example.
 
-A demo app is included to show how to use the project.
+## Setup
 
-To run the demo, follow these steps:
+After cloning the repository, init the theme repository by running `git submodule update --init src/themes/introduction` **in the root directory**.
 
-(Add steps to start up the demo)
+## Running the sample
 
-1.
-2.
-3.
+1. Get into the `src` directory
+2. Run `hugo server -D`
+3. Access the URL given by the Terminal
 
-## Resources
+## Running the image
 
-(Any additional resources or related projects)
+Assuming you already have [Docker](https://docs.docker.com/get-docker/) installed, just run `docker build -t image-name .` on the root directory.
 
-- Link to supporting information
-- Link to similar sample
-- ...
+To execute it, run: `docker run -p <local-port>:80 image-name`
+
+You can also opt to run it from the remote source using `docker run -p <local-port>:80 mcr.microsoft.com/mslearn/samples/contoso-website`
+
+## Deploying to Kubernetes
+
+Inside the [Kubernetes](./kubernetes) directory, you'll have all necessary resources to deploy the application to an AKS cluster using the [HTTP Application Routing Addon](https://docs.microsoft.com/azure/aks/http-application-routing?WT.mc_id=learndeploycontainerappsaks-learn-ludossan).
+
+1. Update the [Ingress.yaml](./kubernetes/ingress.yaml) file and update your specific DNS zone to the one you have in your AKS cluster, this information can be found in the DNS zone resource inside the resource group of your cluster
+2. Use `Kubectl apply -f <filename>` to all the files in the directory to create the workloads
+
+## Key concepts
+
+Hugo is a static build engine that allows users to create static websites. The idea behind this demo is to show how we can deploy a containerized application to AKS.
+
+There's a [Dockerfile](./Dockerfile) in the root of the repository, this Dockerfile is responsible for generating the image we'll be using to deploy the website. It's a simple NGINX default image, in it we do a few steps:
+
+- Update all the packages
+- Install curl, git and Node.js
+- Download and install Hugo
+- Install PostCSS and autoprefixer using NPM globally as they are requirements for the theme
+- Clone the repository and init all submodules
+- Generate a static web page from the website template
+- Move that directory into NGINX public folder
+- Expose port 80 so we can access it from the cluster
+
+## Contributing
+
+This project welcomes contributions and suggestions.  Most contributions require you to agree to a
+Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
+the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+
+When you submit a pull request, a CLA bot will automatically determine whether you need to provide
+a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
+provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
+contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
