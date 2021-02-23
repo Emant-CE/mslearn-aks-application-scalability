@@ -4,7 +4,7 @@ export RESOURCE_NAME=learn-aks-scalability
 
 echo "Creating cluster..."
 
-az group create $RESOURCE_NAME -l eastus
+az group create -n $RESOURCE_NAME -l eastus
 
 az aks create -g $RESOURCE_NAME -n $RESOURCE_NAME --node-count=1 --generate-ssh-keys --enable-addons http_application_rounting --vm-size Standard_B2s
 
