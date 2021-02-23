@@ -15,4 +15,6 @@ echo "Gathering DNS name"
 export DNS_NAME=$(az aks show -g $RESOURCE_NAME -n $RESOURCE_NAME -o tsv --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName)
 sed -i '' 's+!DNS!+'"$DNS_NAME"'+g' ./ingress.yaml
 
-kubectl apply -f .
+kubectl apply -f https://raw.githubusercontent.com/Azure-Samples/mslearn-aks-application-scalability/main/kubernetes/deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/Azure-Samples/mslearn-aks-application-scalability/main/kubernetes/ingress.yaml
+kubectl apply -f https://raw.githubusercontent.com/Azure-Samples/mslearn-aks-application-scalability/main/kubernetes/service.yaml
