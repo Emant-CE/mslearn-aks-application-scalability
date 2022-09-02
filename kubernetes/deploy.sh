@@ -6,7 +6,7 @@ echo "Creating cluster..."
 
 az group create -n $RESOURCE_NAME -l eastus
 
-az aks create -g $RESOURCE_NAME -n $RESOURCE_NAME --node-count=1 --generate-ssh-keys --enable-addons http_application_routing -s Standard_B2s
+az aks create -g $RESOURCE_NAME -n $RESOURCE_NAME --node-count=1 --generate-ssh-keys --enable-addons http_application_routing -s Standard_B2s -l eastus
 
 az aks get-credentials -g $RESOURCE_NAME -n $RESOURCE_NAME
 
